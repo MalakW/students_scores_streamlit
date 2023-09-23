@@ -236,13 +236,3 @@ In this dynamic academic landscape, we witness the birth of rising stars, leavin
         """,
         unsafe_allow_html=True
     )
-    
-    
-
-
-
-
-
-
-
-    
