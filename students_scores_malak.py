@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 #setting wide screen page for streamlite
 st.set_page_config(layout = 'wide')
 
-#loading the data set from google drive 
+#loading the data set
 path = "students_scores_streamlit/StudentsPerformance.csv"
 df = pd.read_csv(path)    
 
