@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np 
 import plotly.express as px  
 import plotly.graph_objects as go
+import streamlit.components.v1 as components
 
 #setting wide screen page for streamlite
 st.set_page_config(layout = 'wide')
@@ -92,18 +93,20 @@ if selected == "Gender":
                          values=gender_counts.values, 
                          names=gender_counts.index,
                          color_discrete_sequence=['#0C356A', '#279EFF', '#40F8FF', '#D5FFD0'])
-        st.plotly_chart(pie_fig)
-            # Centering the pie chart using CSS
- 
+        
         # Centering the pie chart using CSS
-        st.write(
-            f"""
-            <div style="display: flex; justify-content: center;">
-                {pie_fig.to_html(full_html=False)}
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        c = f"""
+            <style>
+                .chart-container {{
+                    display: flex;
+                    justify-content: center;
+                }}
+            </style>
+        """
+        
+        st.markdown(c, unsafe_allow_html=True)
+        
+        components.html(pie_fig.to_html(full_html=False), height=500)
     else:
         st.warning(f"No data available for Team {selected_option}")
         
