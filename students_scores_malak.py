@@ -93,6 +93,15 @@ if selected == "Gender":
                          names=gender_counts.index,
                          color_discrete_sequence=['#0C356A', '#279EFF', '#40F8FF', '#D5FFD0'])
         st.plotly_chart(pie_fig)
+            # Centering the pie chart using CSS
+    st.write(
+        f"""
+        <div style="display: flex; justify-content: center;">
+            {pie_fig.to_html(full_html=False)}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     else:
         st.warning(f"No data available for Team {selected_option}")
         
