@@ -10,3 +10,4 @@ streamlit==1.23.1
 colorama==0.4.6
 colorcet==3.0.1
 colorlover==0.3.0
+docstring-to-markdown==0.11
