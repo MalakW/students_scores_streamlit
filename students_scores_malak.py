@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 st.set_page_config(layout = 'wide')
 
 #loading the data set
-path = "students_scores_streamlit/StudentsPerformance.csv"
+path = "StudentsPerformance.csv"
 df = pd.read_csv(path)    
 
 #create age and total columns 
