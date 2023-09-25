@@ -164,36 +164,42 @@ if selected == "Scores":
 # Group by parental level of education and calculate the mean score
 mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
 
-    # Apply the color palette directly to the DataFrame
+
+    st.subheader(f"The effect of Parental education level on the student's {selected_score}")
+
+# Group by parental level of education and calculate the mean score
+mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
+
+# Apply the color palette directly to the DataFrame
 mean_scores[selected_score] = mean_scores[selected_score].astype(str)  # Convert to string for color assignment
 mean_scores['color'] = mean_scores[selected_score].map({
     '0C356A': '#0C356A',
     '279EFF': '#279EFF',
     '40F8FF': '#40F8FF',
     'D5FFD0': '#D5FFD0'
-    })
-    
-    # Create an interactive bar chart
-    fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color='color')
-    
-    # Update the layout for better visualization
-    fig.update_layout(
+})
+
+# Create an interactive bar chart
+fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color='color')
+
+# Update the layout for better visualization
+fig.update_layout(
     xaxis_title="Parental Level of Education",
     yaxis_title=f"Mean {selected_score.capitalize()} Score"
-    )
-    fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
-    fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
-    
-    # Centering the chart using HTML and CSS
-    st.write(
+)
+fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
+fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
+
+# Centering the chart using HTML and CSS
+st.write(
     f"""
     <div style="display: flex; justify-content: center;">
         {fig.to_html(full_html=False)}
     </div>
     """,
     unsafe_allow_html=True,
-    )
-    
+)
+
     if selected_score == "math score":
         st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
     elif selected_score == "reading score":
