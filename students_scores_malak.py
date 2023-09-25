@@ -88,28 +88,26 @@ if selected == "Gender":
         gender_counts = team_data['gender'].value_counts()
 
     if not gender_counts.empty:
-        pie_fig = px.pie(gender_counts, 
-                     values=gender_counts.values, 
-                     names=gender_counts.index,
-                     color_discrete_sequence=['#0C356A', '#279EFF', '#40F8FF', '#D5FFD0'])
-    
-        # Centering the pie chart using CSS
-        c = f"""
+        # Center the charts using custom CSS
+        st.markdown(
+            """
             <style>
-                .chart-container {{
+                .css-3mmywe {
                     display: flex;
                     justify-content: center;
-                }}
+                }
             </style>
-        """
-
-    st.markdown(c, unsafe_allow_html=True)
-    
-    components.html(pie_fig.to_html(full_html=False), height=500)
-
-else:
-    st.warning(f"No data available for Team {selected_option}")
-            
+            """,
+            unsafe_allow_html=True)
+        
+        pie_fig = px.pie(gender_counts, 
+                         values=gender_counts.values, 
+                         names=gender_counts.index,
+                         color_discrete_sequence=['#0C356A', '#279EFF', '#40F8FF', '#D5FFD0'])
+        st.plotly_chart(pie_fig)
+    else:
+        st.warning(f"No data available for Team {selected_option}")
+        
 # Displaying text analysis for the pie chart
     if selected_option == "group A":
         st.text("The female gender is higher than male for group A.")
