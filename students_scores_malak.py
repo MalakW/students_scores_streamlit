@@ -5,13 +5,12 @@ import pandas as pd
 import numpy as np 
 import plotly.express as px  
 import plotly.graph_objects as go
-import streamlit.components.v1 as components
 
 #setting wide screen page for streamlite
 st.set_page_config(layout = 'wide')
 
-#loading the data set
-path = "StudentsPerformance.csv"
+#loading the data set 
+path = "C:\\Users\\malak\\Downloads\\StudentsPerformance.csv"
 df = pd.read_csv(path)    
 
 #create age and total columns 
@@ -89,24 +88,23 @@ if selected == "Gender":
         gender_counts = team_data['gender'].value_counts()
 
     if not gender_counts.empty:
+        # Center the charts using custom CSS
+        st.markdown(
+            """
+            <style>
+                .css-3mmywe {
+                    display: flex;
+                    justify-content: center;
+                }
+            </style>
+            """,
+            unsafe_allow_html=True)
+        
         pie_fig = px.pie(gender_counts, 
                          values=gender_counts.values, 
                          names=gender_counts.index,
                          color_discrete_sequence=['#0C356A', '#279EFF', '#40F8FF', '#D5FFD0'])
-        
-        # Centering the pie chart using CSS
-        c = f"""
-            <style>
-                .chart-container {{
-                    display: flex;
-                    justify-content: center;
-                }}
-            </style>
-        """
-        
-        st.markdown(c, unsafe_allow_html=True)
-        
-        components.html(pie_fig.to_html(full_html=False), height=500)
+        st.plotly_chart(pie_fig)
     else:
         st.warning(f"No data available for Team {selected_option}")
         
@@ -160,46 +158,23 @@ if selected == "Scores":
     filtered_df = df[selected_score]
     
     st.subheader(f"The effect of Parental education level on the student's {selected_score}")
-
-# Group by parental level of education and calculate the mean score
-mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
-
-
-st.subheader(f"The effect of Parental education level on the student's {selected_score}")
-
-# Group by parental level of education and calculate the mean score
-mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
-
-# Apply the color palette directly to the DataFrame
-mean_scores[selected_score] = mean_scores[selected_score].astype(str)  # Convert to string for color assignment
-mean_scores['color'] = mean_scores[selected_score].map({
-    '0C356A': '#0C356A',
-    '279EFF': '#279EFF',
-    '40F8FF': '#40F8FF',
-    'D5FFD0': '#D5FFD0'
-})
-
-# Create an interactive bar chart
-fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color='color')
-
-# Update the layout for better visualization
-fig.update_layout(
-    xaxis_title="Parental Level of Education",
-    yaxis_title=f"Mean {selected_score.capitalize()} Score"
-)
-fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
-fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
-
-  # Centering the chart using HTML and CSS
-st.write(
-        f"""
-        <div style="display: flex; justify-content: center;">
-            {fig.to_html(full_html=False)}
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
+    # Group by parental level of education and calculate the mean score
+    mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
+    
+    # Create an interactive bar chart
+    fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color=selected_score)
+    
+    # Update the layout for better visualization
+    fig.update_layout(
+                      xaxis_title="Parental Level of Education",
+                      yaxis_title=f"Mean {selected_score.capitalize()} Score")
+    
+    fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
+    fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
+    
+    # Display the bar chart
+    st.plotly_chart(fig)
+    
     if selected_score == "math score":
         st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
     elif selected_score == "reading score":
@@ -231,6 +206,9 @@ st.write(
     fig.update_layout(
                       xaxis_title="Test Preparation Course",
                       yaxis_title="Mean Score")
+    
+    fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
+    fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
     
     # Display the bar chart
     st.plotly_chart(fig)
