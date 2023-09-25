@@ -162,13 +162,32 @@ if selected == "Scores":
     mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
     
     colors = ['#0C356A', '#279EFF', '#40F8FF']
+    
     # Create an interactive bar chart
-    fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color=selected_score, color_discrete_sequence=colors)
+    #fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color=selected_score, color_discrete_sequence=colors)
+    
+    # Update the layout for better visualization
+    #fig.update_layout(
+                      #xaxis_title="Parental Level of Education",
+                      #yaxis_title=f"Mean {selected_score.capitalize()} Score")
+    
+    #fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
+    #fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
+    
+    # Display the bar chart
+    #st.plotly_chart(fig)
+
+    # Create an interactive bar chart
+    fig = px.bar(mean_scores, 
+                 x='parental level of education', 
+                 y=selected_score, 
+                 color_discrete_sequence=colors)
     
     # Update the layout for better visualization
     fig.update_layout(
-                      xaxis_title="Parental Level of Education",
-                      yaxis_title=f"Mean {selected_score.capitalize()} Score")
+        xaxis_title="Parental Level of Education",
+        yaxis_title=f"Mean {selected_score.capitalize()} Score"
+    )
     
     fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
     fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
