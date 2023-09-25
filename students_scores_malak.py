@@ -200,25 +200,96 @@ st.write(
         unsafe_allow_html=True,
     )
 
-if selected_score == "math score":
-        st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
-elif selected_score == "reading score":
-        st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
-elif selected_score == "writing score":
-       st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
+# Scores Page
+if selected == "Scores":
+    st.markdown(
+        """
+        <style>
+            .css-3mmywe {
+                display: flex;
+                justify-content: center;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True)
     
-st.subheader(f"Interaction between Test Preparation Course and Scores")
+    st.subheader("Total Scores by Group and Subject")
+
+    # Group by 'team' and sum the scores
+    scores_by_group = df.groupby('team')[['math score', 'reading score', 'writing score']].sum()
+
+    # Create an interactive bar chart
+    fig = px.bar(scores_by_group, barmode='group', color_discrete_sequence=['#0C356A', '#279EFF', '#40F8FF', '#D5FFD0'])
+    fig.update_layout(
+                      xaxis_title="Group",
+                      yaxis_title="Total Score",
+                      legend_title="Subject",
+                      xaxis={'categoryorder':'array', 'categoryarray':['group A', 'group B', 'group C', 'group D', 'group E']})
+
+    fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
+    fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
+    st.plotly_chart(fig)
+    st.text('Group C has the highest score compared to other groups.')
+    
+    df = df[~df['parental level of education'].isin(['some college', 'some high school'])]
+    
+    selected_score = st.selectbox("Select Subject", ['math score', 'reading score', 'writing score'])
+    filtered_df = df[selected_score]
+    
+    st.subheader(f"The effect of Parental education level on the student's {selected_score}")
+
+    # Group by parental level of education and calculate the mean score
+    mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
+
+    # Apply the color palette directly to the DataFrame
+    mean_scores[selected_score] = mean_scores[selected_score].astype(str)  # Convert to string for color assignment
+    mean_scores['color'] = mean_scores[selected_score].map({
+        '0C356A': '#0C356A',
+        '279EFF': '#279EFF',
+        '40F8FF': '#40F8FF',
+        'D5FFD0': '#D5FFD0'
+    })
+
+    # Create an interactive bar chart
+    fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color='color')
+
+    # Update the layout for better visualization
+    fig.update_layout(
+        xaxis_title="Parental Level of Education",
+        yaxis_title=f"Mean {selected_score.capitalize()} Score"
+    )
+    fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
+    fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
+
+    # Centering the chart using HTML and CSS
+    st.write(
+        f"""
+        <div style="display: flex; justify-content: center;">
+            {fig.to_html(full_html=False)}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    if selected_score == "math score":
+        st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
+    elif selected_score == "reading score":
+        st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
+    elif selected_score == "writing score":
+        st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
+
+    st.subheader(f"Interaction between Test Preparation Course and Scores")
     
     # Group by 'test preparation course' and calculate the mean score for each subject
-mean_scores = df.groupby('test preparation course')[['math score', 'reading score', 'writing score']].mean().reset_index()
-colors = ['#0C356A', '#279EFF', '#40F8FF']
+    mean_scores = df.groupby('test preparation course')[['math score', 'reading score', 'writing score']].mean().reset_index()
+    colors = ['#0C356A', '#279EFF', '#40F8FF']
     
     # Create a grouped bar chart
-fig = go.Figure()
+    fig = go.Figure()
     
-subjects = ['math score', 'reading score', 'writing score']
+    subjects = ['math score', 'reading score', 'writing score']
 
-for i, subject in enumerate(subjects):
+    for i, subject in enumerate(subjects):
         subject_data = mean_scores[['test preparation course', subject]]
         fig.add_trace(go.Bar(
             x=subject_data['test preparation course'],
@@ -228,30 +299,31 @@ for i, subject in enumerate(subjects):
         ))
     
     # Update the layout for better visualization
-fig.update_layout(
-                      xaxis_title="Test Preparation Course",
-                      yaxis_title="Mean Score")
+    fig.update_layout(
+        xaxis_title="Test Preparation Course",
+        yaxis_title="Mean Score"
+    )
     
     # Display the bar chart
-st.plotly_chart(fig)
+    st.plotly_chart(fig)
 
-st.text('The graph shows that the students who took the test preparation course got higher score than those who didn\'t.')  
+    st.text('The graph shows that the students who took the test preparation course got higher score than those who didn\'t.')  
 
-#Home Page
+# Home Page
 if selected == 'Home':
     st.title('Rising Stars: Test Prep Unlocks Potential')
 
     story = """
-In a bustling academic arena, students are on a quest for knowledge and excellence. Among them, a group of young scholars stands out, each armed with their own unique potential.
+    In a bustling academic arena, students are on a quest for knowledge and excellence. Among them, a group of young scholars stands out, each armed with their own unique potential.
 
-Our story begins in a diverse cohort, where students are faced with the choice of embarking on a test preparation course. The path they choose will shape their academic journey.
+    Our story begins in a diverse cohort, where students are faced with the choice of embarking on a test preparation course. The path they choose will shape their academic journey.
 
-As the data unveils, a revelation emerges. Those who dared to seize the opportunity presented by the test preparation course soared to new heights. Their scores in math, reading, and writing blossomed, painting a vivid picture of the power of preparation.
+    As the data unveils, a revelation emerges. Those who dared to seize the opportunity presented by the test preparation course soared to new heights. Their scores in math, reading, and writing blossomed, painting a vivid picture of the power of preparation.
 
-This data-driven tale reminds us that with the right tools and a spark of determination, every student has the potential to shine. The choice to embark on the journey of preparation is a step towards unlocking one's true academic prowess.
+    This data-driven tale reminds us that with the right tools and a spark of determination, every student has the potential to shine. The choice to embark on the journey of preparation is a step towards unlocking one's true academic prowess.
 
-In this dynamic academic landscape, we witness the birth of rising stars, leaving a trail of inspiration for generations to come.
-"""
+    In this dynamic academic landscape, we witness the birth of rising stars, leaving a trail of inspiration for generations to come.
+    """
 
     # Display the story with some styling
     st.markdown(
