@@ -163,7 +163,7 @@ if selected == "Scores":
     
     colors = ['#0C356A', '#279EFF', '#40F8FF']
     # Create an interactive bar chart
-    fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color=colors)
+    fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color=selected_score, color_discrete_sequence=colors)
     
     # Update the layout for better visualization
     fig.update_layout(
