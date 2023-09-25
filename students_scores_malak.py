@@ -190,15 +190,15 @@ fig.update_layout(
 fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
 fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
 
-        # Centering the chart using HTML and CSS
-        st.write(
-            f"""
-            <div style="display: flex; justify-content: center;">
-                {fig.to_html(full_html=False)}
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+  # Centering the chart using HTML and CSS
+    st.write(
+        f"""
+        <div style="display: flex; justify-content: center;">
+            {fig.to_html(full_html=False)}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     if selected_score == "math score":
         st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
