@@ -107,9 +107,9 @@ if selected == "Gender":
     st.markdown(c, unsafe_allow_html=True)
     
     components.html(pie_fig.to_html(full_html=False), height=500)
-else:
-    st.warning(f"No data available for Team {selected_option}")
-    
+    else:
+        st.warning(f"No data available for Team {selected_option}")
+        
 # Displaying text analysis for the pie chart
     if selected_option == "group A":
         st.text("The female gender is higher than male for group A.")
