@@ -162,7 +162,7 @@ if selected == "Scores":
     mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
     
     # Create an interactive bar chart
-    fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color=selected_score)
+    fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color=custom_colors)
     
     # Update the layout for better visualization
     fig.update_layout(
