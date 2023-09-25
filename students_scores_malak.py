@@ -165,7 +165,7 @@ if selected == "Scores":
 mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
 
 
-   st.subheader(f"The effect of Parental education level on the student's {selected_score}")
+st.subheader(f"The effect of Parental education level on the student's {selected_score}")
 
 # Group by parental level of education and calculate the mean score
 mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
