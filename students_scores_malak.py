@@ -165,8 +165,8 @@ if selected == "Scores":
 mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
 
     # Apply the color palette directly to the DataFrame
-    mean_scores[selected_score] = mean_scores[selected_score].astype(str)  # Convert to string for color assignment
-    mean_scores['color'] = mean_scores[selected_score].map({
+mean_scores[selected_score] = mean_scores[selected_score].astype(str)  # Convert to string for color assignment
+mean_scores['color'] = mean_scores[selected_score].map({
     '0C356A': '#0C356A',
     '279EFF': '#279EFF',
     '40F8FF': '#40F8FF',
