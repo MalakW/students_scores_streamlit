@@ -164,7 +164,8 @@ if selected == "Scores":
 # Group by parental level of education and calculate the mean score
 mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
 
-    st.subheader(f"The effect of Parental education level on the student's {selected_score}")
+
+st.subheader(f"The effect of Parental education level on the student's {selected_score}")
 
 # Group by parental level of education and calculate the mean score
 mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
@@ -189,36 +190,35 @@ fig.update_layout(
 fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
 fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
 
-# Centering the chart using HTML and CSS
+  # Centering the chart using HTML and CSS
 st.write(
-    f"""
-    <div style="display: flex; justify-content: center;">
-        {fig.to_html(full_html=False)}
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+        f"""
+        <div style="display: flex; justify-content: center;">
+            {fig.to_html(full_html=False)}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
-
-    if selected_score == "math score":
+if selected_score == "math score":
         st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
-    elif selected_score == "reading score":
+elif selected_score == "reading score":
         st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
-    elif selected_score == "writing score":
+elif selected_score == "writing score":
        st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
     
-    st.subheader(f"Interaction between Test Preparation Course and Scores")
+st.subheader(f"Interaction between Test Preparation Course and Scores")
     
     # Group by 'test preparation course' and calculate the mean score for each subject
-    mean_scores = df.groupby('test preparation course')[['math score', 'reading score', 'writing score']].mean().reset_index()
-    colors = ['#0C356A', '#279EFF', '#40F8FF']
+mean_scores = df.groupby('test preparation course')[['math score', 'reading score', 'writing score']].mean().reset_index()
+colors = ['#0C356A', '#279EFF', '#40F8FF']
     
     # Create a grouped bar chart
-    fig = go.Figure()
+fig = go.Figure()
     
-    subjects = ['math score', 'reading score', 'writing score']
-    
-    for i, subject in enumerate(subjects):
+subjects = ['math score', 'reading score', 'writing score']
+
+for i, subject in enumerate(subjects):
         subject_data = mean_scores[['test preparation course', subject]]
         fig.add_trace(go.Bar(
             x=subject_data['test preparation course'],
@@ -228,14 +228,14 @@ st.write(
         ))
     
     # Update the layout for better visualization
-    fig.update_layout(
+fig.update_layout(
                       xaxis_title="Test Preparation Course",
                       yaxis_title="Mean Score")
     
     # Display the bar chart
-    st.plotly_chart(fig)
+st.plotly_chart(fig)
 
-    st.text('The graph shows that the students who took the test preparation course got higher score than those who didn\'t.')  
+st.text('The graph shows that the students who took the test preparation course got higher score than those who didn\'t.')  
 
 #Home Page
 if selected == 'Home':
