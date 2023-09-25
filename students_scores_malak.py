@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np 
 import plotly.express as px  
 import plotly.graph_objects as go
+import streamlit.components.v1 as components
 
 #setting wide screen page for streamlite
 st.set_page_config(layout = 'wide')
