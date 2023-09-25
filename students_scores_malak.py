@@ -89,16 +89,14 @@ if selected == "Gender":
 
     if not gender_counts.empty:
         # Center the charts using custom CSS
-        st.markdown(
-            """
+        c = f"""
             <style>
-                .css-3mmywe {
+                .chart-container {{
                     display: flex;
                     justify-content: center;
-                }
+                }}
             </style>
-            """,
-            unsafe_allow_html=True)
+        """
         
         pie_fig = px.pie(gender_counts, 
                          values=gender_counts.values, 
