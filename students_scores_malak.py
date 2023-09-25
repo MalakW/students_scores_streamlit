@@ -87,24 +87,25 @@ if selected == "Gender":
         team_data = df[df['team'] == selected_option]
         gender_counts = team_data['gender'].value_counts()
 
-    if not gender_counts.empty:
-        # Center the charts using custom CSS
-        st.markdown(
-            """
-            <style>
-                .css-3mmywe {
-                    display: flex;
-                    justify-content: center;
-                }
-            </style>
-            """,
-            unsafe_allow_html=True)
-        
+        if not gender_counts.empty:
         pie_fig = px.pie(gender_counts, 
                          values=gender_counts.values, 
                          names=gender_counts.index,
                          color_discrete_sequence=['#0C356A', '#279EFF', '#40F8FF', '#D5FFD0'])
-        st.plotly_chart(pie_fig)
+        
+        # Centering the pie chart using CSS
+        c = f"""
+            <style>
+                .chart-container {{
+                    display: flex;
+                    justify-content: center;
+                }}
+            </style>
+        """
+        
+        st.markdown(c, unsafe_allow_html=True)
+        
+        components.html(pie_fig.to_html(full_html=False), height=500)
     else:
         st.warning(f"No data available for Team {selected_option}")
         
