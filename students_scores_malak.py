@@ -87,8 +87,8 @@ if selected == "Gender":
         team_data = df[df['team'] == selected_option]
         gender_counts = team_data['gender'].value_counts()
 
-        if not gender_counts.empty:
-        pie_fig = px.pie(gender_counts, 
+if not gender_counts.empty:
+    pie_fig = px.pie(gender_counts, 
                          values=gender_counts.values, 
                          names=gender_counts.index,
                          color_discrete_sequence=['#0C356A', '#279EFF', '#40F8FF', '#D5FFD0'])
