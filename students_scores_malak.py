@@ -160,11 +160,13 @@ if selected == "Scores":
     filtered_df = df[selected_score]
     
     st.subheader(f"The effect of Parental education level on the student's {selected_score}")
+
     # Group by parental level of education and calculate the mean score
     mean_scores = df.groupby('parental level of education')[selected_score].mean().reset_index()
     
     # Create an interactive bar chart
-    fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color=selected_score)
+    fig = px.bar(mean_scores, x='parental level of education', y=selected_score, color=selected_score,
+                 color_discrete_sequence=['#0C356A', '#279EFF', '#40F8FF', '#D5FFD0'])
     
     # Update the layout for better visualization
     fig.update_layout(
@@ -173,8 +175,12 @@ if selected == "Scores":
     fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
     fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
     
-    # Display the bar chart
-    st.plotly_chart(fig)
+    # Centering the chart using CSS
+    col1, col2, col3 = st.columns([1, 1, 6])
+    with col2:
+        st.write("")
+    with col3:
+        st.plotly_chart(fig, use_container_width=True)
     
     if selected_score == "math score":
         st.text(f"The students that their parent are of master's degree have the highest score for {selected_score}. ")
