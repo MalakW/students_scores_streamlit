@@ -191,7 +191,7 @@ fig.update_xaxes(showgrid=False)  # Remove x-axis grid lines
 fig.update_yaxes(showgrid=False)  # Remove y-axis grid lines
 
   # Centering the chart using HTML and CSS
-        st.write(
+st.write(
         f"""
         <div style="display: flex; justify-content: center;">
             {fig.to_html(full_html=False)}
